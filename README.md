@@ -69,6 +69,8 @@ run -all
 - FIFO buffers will store and manage empty/full conditions of Fifo
 - All invalid packets will have an asserted error signal
 
+![image alt](Screenshot_1.png)
+
 TB FUNCTIONALITY
 Creates more than just one packet; will create thousands of packets
 Tests all 3 output ports
