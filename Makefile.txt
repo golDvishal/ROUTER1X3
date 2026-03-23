@@ -1,0 +1,25 @@
+TOP = router_top_tb
+RTL = ../rtl
+TB  = ../tb
+
+VLOG = vlog
+VSIM = vsim
+
+all: compile simulate
+
+lib:
+        vlib work
+        vmap work work
+
+compile: lib
+        $(VLOG) $(RTL)/*.v $(TB)/router_tb.sv
+
+
+simulate:
+        $(VSIM) -c $(TOP) -do "run -all; quit"
+
+wave:
+        $(VSIM) $(TOP)
+
+clean:
+        rm -rf work transcript vsim.wlf
