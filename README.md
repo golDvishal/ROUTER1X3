@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚦 Router 1×3 in Verilog HDL
+#  Router 1×3 in Verilog HDL
 
 ### **High-Speed Packet Router with FIFO Buffering & Parity Error Detection**
 
