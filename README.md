@@ -213,6 +213,7 @@ Successful simulation demonstrates:
 - ✅ Correct parity verification
 - ✅ Invalid packet rejection
 - ✅ Proper synchronization
+<img src="Screenshot_1.png" width="1000">
 
 ---
 
