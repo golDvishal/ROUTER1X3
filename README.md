@@ -1,81 +1,344 @@
-ROUTER 1X3 IN VERILOG
+<div align="center">
 
-INTRODUCTION
-The goal of this project is to build a 1x3 Router in Verilog HDL. This router takes packets as input from a single input port and sends them to one of three different output ports based on their destination address.
+# 🚦 Router 1×3 in Verilog HDL
 
+### **High-Speed Packet Router with FIFO Buffering & Parity Error Detection**
 
-FUNCTIONALITY
-There are a number of features that the router has:
+[![Verilog](https://img.shields.io/badge/Language-Verilog-blue.svg)]()
+[![FSM](https://img.shields.io/badge/Design-FSM-success)]()
+[![FIFO](https://img.shields.io/badge/Buffers-3%20FIFO-orange)]()
+[![Simulation](https://img.shields.io/badge/Simulation-QuestaSim-red)]()
+[![Verification](https://img.shields.io/badge/Verification-SystemVerilog-purple)]()
+[![Status](https://img.shields.io/badge/Project-Completed-brightgreen)]()
 
-- 1 input port and 3 output ports
-- Data is transferred in packets
-- Each output port has an associated first-in/first-out (FIFO) buffer.
-- Each packet contains a parity bit (bit for error detection).
-- Error detection takes place using the parity bits in the packets.
-- Synchronization is used throughout.
+*A synthesizable **1×3 Packet Router** implemented in Verilog HDL with FIFO buffering, parity error detection, synchronization logic, and comprehensive verification.*
 
+</div>
 
-STRUCTURE 
-The router is comprised of several components:
+---
+
+# 📖 Overview
+
+The **Router 1×3** is a digital communication router designed using **Verilog HDL**.
+
+The router accepts packets from a **single input port** and forwards each packet to **one of three output ports** according to its destination address.
+
+The design includes:
+
+- 🚀 High-speed packet routing
+- 📦 FIFO-based buffering
+- 🛡 Parity error detection
+- 🔄 Synchronization logic
+- 🎛 FSM-based controller
+- ✅ Comprehensive SystemVerilog testbench
+
+---
+
+# ✨ Features
+
+- 📥 **1 Input Port**
+- 📤 **3 Output Ports**
+- 📦 Packet-Based Data Transfer
+- 🧮 FSM-Based Routing Controller
+- 🗂 Independent FIFO Buffer for each Output Port
+- 🛡 Parity-Based Error Detection
+- 🔄 Read/Write Synchronization
+- ⚡ Fully Synthesizable RTL
+- ✅ SystemVerilog Verification Environment
+
+---
+
+# 🧩 Router Architecture
+
+```text
+                  +--------------------+
+                  |     Input Port     |
+                  +---------+----------+
+                            |
+                            v
+                  +--------------------+
+                  |     Register       |
+                  +---------+----------+
+                            |
+                            v
+                  +--------------------+
+                  |   Control Unit     |
+                  |      (FSM)         |
+                  +----+----+----+-----+
+                       |    |    |
+          +------------+    |    +------------+
+          |                 |                 |
+          v                 v                 v
+     +---------+      +---------+      +---------+
+     | FIFO 0  |      | FIFO 1  |      | FIFO 2  |
+     +----+----+      +----+----+      +----+----+
+          |                 |                 |
+          v                 v                 v
+      Output 0          Output 1          Output 2
+```
+
+---
+
+# 🏗 Project Components
+
+### 🎛 Control Unit
+
+- Finite State Machine (FSM)
+- Controls packet flow
+- Generates routing decisions
+- Controls FIFO read/write operations
+
+---
+
+### 📦 FIFO Buffers
+
+Each output port has its own FIFO.
+
+Features:
+
+- Independent buffering
+- Full detection
+- Empty detection
+- Ordered packet delivery
+
+---
+
+### 📝 Register Module
+
+Stores
+
+- Packet Header
+- Payload Data
+- Parity Bit
+
+Acts as an interface between the input port and the routing logic.
+
+---
+
+### 🔄 Synchronizer
+
+Responsible for
+
+- Read Enable generation
+- Write Enable generation
+- FIFO synchronization
+- Safe packet transfer
+
+---
+
+### 🔗 Top Module
+
+Integrates
 
 - Control Unit
-    - The Control Unit uses a finite-state machine (FSM) for routing packets and controlling output ports.
-
-- FIFO
-    - There is a FIFO buffer for each output port of the router.
-
-- Register
-    - The router has registers for each packet's data, in addition to its parity bit.
-
+- FIFOs
+- Registers
 - Synchronizer
-    - The synchronizer is responsible for generating read/write enable signals for the router.
 
-- Top-level Module
-    - The top-level module integrates all of the router's modules.
+into a complete **1×3 Router**.
 
+---
 
+# 📂 Project Structure
 
-File Structure 
-The project will have these folders: 
+```text
 Router1x3
+│
+├── rtl/
+│   ├── control.v        ← FSM Controller
+│   ├── fifo.v           ← FIFO Buffer
+│   ├── register.v       ← Packet Register
+│   ├── sync.v           ← Synchronizer
+│   └── top.v            ← Top-Level Router
+│
+├── tb/
+│   └── router_tb.sv     ← SystemVerilog Testbench
+│
+└── sim/
+    └── Makefile
+```
 
-── rtl/
-       control.v
-       fifo.v
-       register.v
-       sync.v
-       top.v
+---
 
-── tb/
-      router_tb.sv
+# 🛠 Prerequisites
 
-── sim/
-      Makefile
+| Tool | Version |
+|-------|----------|
+| QuestaSim | Recommended |
+| GNU Make | Optional |
 
+The project is fully synthesizable and compatible with standard Verilog simulators.
 
-SIMULATION 
-Verilogs ability to account for 1x3 routers can be verified through QuestaSim Software! 
+---
 
-The following lines will help you simulate the design: 
+# ▶ Running Simulation
+
+Compile the project
+
 ```bash
 vlib work
+
 vlog rtl/*.v tb/router_tb.sv
+```
+
+Launch simulation
+
+```bash
 vsim router_top_tb
+```
+
+View all signals
+
+```tcl
 add wave -r /*
+```
+
+Run simulation
+
+```tcl
 run -all
 ```
 
-- All valid packets will be sent through correctly
-- FIFO buffers will store and manage empty/full conditions of Fifo
-- All invalid packets will have an asserted error signal
+---
 
-![image alt](Screenshot_1.png)
+# ✅ Expected Results
 
-TB FUNCTIONALITY
-Creates more than just one packet; will create thousands of packets
-Tests all 3 output ports
-Ensures results on all FIFO full and empty
-Ensures that no packets with incorrect parity will pass through as valid packets
+Successful simulation demonstrates:
 
+- ✅ Correct packet routing
+- ✅ Destination-based packet forwarding
+- ✅ FIFO buffering
+- ✅ FIFO Full detection
+- ✅ FIFO Empty detection
+- ✅ Correct parity verification
+- ✅ Invalid packet rejection
+- ✅ Proper synchronization
 
+---
 
+# 📊 Packet Flow
+
+```text
+Incoming Packet
+        │
+        ▼
+ Packet Register
+        │
+        ▼
+ Control FSM
+        │
+        ▼
+Destination Decode
+        │
+ ┌──────┼──────┐
+ ▼      ▼      ▼
+FIFO0 FIFO1 FIFO2
+ │      │      │
+ ▼      ▼      ▼
+OUT0   OUT1   OUT2
+```
+
+---
+
+# 🛡 Error Detection
+
+Each packet contains a **Parity Bit**.
+
+The router performs parity verification before forwarding packets.
+
+### Valid Packet
+
+```text
+Calculated Parity == Received Parity
+```
+
+✔ Packet Accepted
+
+---
+
+### Invalid Packet
+
+```text
+Calculated Parity ≠ Received Parity
+```
+
+❌ Error Signal Asserted
+
+Packet is discarded as invalid.
+
+---
+
+# 🧪 Testbench Features
+
+The verification environment performs extensive testing.
+
+### ✔ Packet Generation
+
+- Generates thousands of packets
+- Randomized packet transmission
+- Multiple destination addresses
+
+### ✔ Functional Verification
+
+- Tests all three output ports
+- Verifies packet ordering
+- Checks routing correctness
+
+### ✔ FIFO Verification
+
+- FIFO Full condition
+- FIFO Empty condition
+- Read/Write synchronization
+- Overflow protection
+
+### ✔ Error Verification
+
+- Valid parity packets
+- Invalid parity packets
+- Error signal assertion
+- Packet rejection
+
+---
+
+# 🎯 Design Highlights
+
+✨ Fully Synthesizable Verilog RTL
+
+🚀 FSM-Based Router Controller
+
+📦 Three Independent FIFO Buffers
+
+🛡 Built-in Parity Error Detection
+
+🔄 Synchronization Logic
+
+⚡ Efficient Packet Routing
+
+🧪 Comprehensive SystemVerilog Testbench
+
+📊 Extensive Functional Verification
+
+---
+
+# 📝 Applications
+
+This router architecture is suitable for
+
+- 📡 Network-on-Chip (NoC)
+- 💻 Embedded Communication Systems
+- 🔄 FPGA-Based Packet Switching
+- 🌐 Digital Communication Networks
+- 🛰 High-Speed Data Routing
+- 🎓 Digital Design & VLSI Learning Projects
+
+---
+
+<div align="center">
+
+## ⭐ Router 1×3
+
+**Verilog HDL Packet Router with FIFO Buffering & Error Detection**
+
+Designed using **Verilog HDL** • Verified with **SystemVerilog** • Simulated using **QuestaSim**
+
+</div>
